@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
+#include <ctype.h>
 
 /*data structures*/
 
@@ -19,9 +21,9 @@
 
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
 
 /**
@@ -35,17 +37,24 @@ typedef struct stack_s
 
 typedef struct instruction_s
 {
-        char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /*Opcodes functions*/
-void m_push(stack_t **stack, int value, unsigned int line_number);
+void m_push(stack_t **stack, unsigned int line_number);
 void m_pall(stack_t **stack, unsigned int line_number);
-void pint(stack_t **stack, unsigned int line_number);
+void m_pint(stack_t **stack, unsigned int line_number);
 void m_pop(stack_t **stack, unsigned int line_number);
+void m_swap(stack_t **stack, unsigned int line_number);
+void m_add(stack_t **stack, unsigned int line_number);
+void m_nop(stack_t **stack, unsigned int line_number);
+void m_sub(stack_t **stack, unsigned int line_number);
+void m_div(stack_t **stack, unsigned int line_number);
 
 /*helper function*/
 int main(int argc, char **argv);
-void *get_opcode(char *opcode);
+void (*get_opcode(char *opcode))(stack_t **, unsigned int);
+void exe(char *opcode, stack_t **stack);
+
 #endif
