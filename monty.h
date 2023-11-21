@@ -41,6 +41,11 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/**
+ * enum mode_s - Enumeration of the data modes for the stack/queue.
+ * @MODE_STACK: Enumerator for stack mode (LIFO - Last In, First Out).
+ * @MODE_QUEUE: Enumerator for queue mode (FIFO - First In, First Out).
+ */
 typedef enum mode_s
 {
 	MODE_STACK,
