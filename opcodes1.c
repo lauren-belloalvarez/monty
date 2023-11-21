@@ -1,55 +1,38 @@
 #include "monty.h"
 
 /**
- * m_push - adds element to top of stack
- *
- * @stack: points to top node of stack_t linked list
- * @line_number: current line in bytecodes file
- * @arg: argument passed to push
- *
- * Return: no value, modifies stack
+ * m_push - adds an element to the top of the stack
+ * @stack: double pointer to the top of the stack
+ * @line_number: script line number
  */
-
 void m_push(stack_t **stack, unsigned int line_number)
 {
-	char *argument;
-	int i, value;
+	char *arg;
+	int num;
 	stack_t *new_node;
 
-	if ((*stack == NULL) || (*stack != NULL && (*stack)->n == 0))
+	arg = strtok(NULL, " \n\t");
+	if (arg == NULL || !is_number(arg))
 	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	argument = strtok(NULL, " \n");
-	if (argument == NULL)
-	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-	for (i = 0; argument[i] != '\0'; i++)
-	{
-		if (!isdigit(argument[i]) && argument[i] != '-' && argument[i] != '+')
-		{
-			fprintf(stderr, "L%u: usage: push integer\n", line_number);
-			exit(EXIT_FAILURE);
-		}
-	}
-	value = atoi(argument);
+
+	num = atoi(arg);
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	new_node->n = value;
+
+	new_node->n = num;
 	new_node->prev = NULL;
 	new_node->next = *stack;
 
 	if (*stack != NULL)
-	{
 		(*stack)->prev = new_node;
-	}
+
 	*stack = new_node;
 }
 

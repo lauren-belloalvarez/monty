@@ -41,6 +41,14 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+typedef enum mode_s
+{
+	MODE_STACK,
+	MODE_QUEUE
+} mode_t;
+
+extern mode_t data_mode;
+
 /*Opcodes functions*/
 void m_push(stack_t **stack, unsigned int line_number);
 void m_pall(stack_t **stack, unsigned int line_number);
@@ -51,10 +59,19 @@ void m_add(stack_t **stack, unsigned int line_number);
 void m_nop(stack_t **stack, unsigned int line_number);
 void m_sub(stack_t **stack, unsigned int line_number);
 void m_div(stack_t **stack, unsigned int line_number);
+void m_mul(stack_t **stack, unsigned int line_number);
+void m_mod(stack_t **stack, unsigned int line_number);
+void m_pchar(stack_t **stack, unsigned int line_number);
+void m_pstr(stack_t **stack, unsigned int line_number);
+void m_rotl(stack_t **stack, unsigned int line_number);
+void m_rotr(stack_t **stack, unsigned int line_number);
+void m_stack(stack_t **stack, unsigned int line_number);
+void m_queue(stack_t **stack, unsigned int line_number);
 
 /*helper function*/
 int main(int argc, char **argv);
 void (*get_opcode(char *opcode))(stack_t **, unsigned int);
-void exe(char *opcode, stack_t **stack);
+void exe(char *line, stack_t **stack, unsigned int line_number);
+int is_number(char *str);
 
 #endif
